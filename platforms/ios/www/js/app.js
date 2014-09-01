@@ -2,10 +2,44 @@
 
     "use strict";
 
+    var readyValue = {};
+    readyValue.polymerReady = false;
+    readyValue.deviceReady = false;
+
     /* Wait until cordova is ready to initiate the use of cordova plugins and app launch */
-    document.addEventListener("deviceready", function() {
-        authenticateUser(showUsersList);
+    document.addEventListener("polymer-ready", function() {
+        //authenticateUser(showUsersList);
+        if(initReady('polymer')) {
+            var forceclient = document.querySelector('forceclient-service'); //.authenticateUser(showUsersList);
+            forceclient.authenticateUser(showUsersList);
+        }
     }, false);
+
+    document.addEventListener("deviceready", function() {
+        //authenticateUser(showUsersList);
+        if(initReady('device')) {
+            var forceclient = document.querySelector('forceclient-service'); //.authenticateUser(showUsersList);
+            forceclient.authenticateUser(showUsersList);
+        }
+    }, false);
+
+    var initReady = function(isReady) {
+        if(isReady == 'polymer') {
+            readyValue.polymerReady = true;
+        } else if(isReady == 'device') {
+            readyValue.deviceReady = true;
+        }
+
+        alert(readyValue);
+
+        if(readyValue.polymerReady && readyValue.deviceReady) {
+            alert('true');
+            return true;
+        } else {
+            alert('false');
+            return false;
+        }
+    }
 
     /* Method to authenticate user with Salesforce Mobile SDK's OAuth Plugin */
     var authenticateUser = function(successHandler, errorHandler) {
@@ -36,12 +70,14 @@
         fetchRecords(forceClient, function(data) {
             var users = data.records;
 
+            console.log(data.records);
+
             var listItemsHtml = '';
             for (var i=0; i < users.length; i++) {
                 listItemsHtml += ('<li class="table-view-cell"><div class="media-body">' + users[i].Name + '</div></li>');
             }
 
-            console.log(listItemsHtml);
+            //console.log(listItemsHtml);
             //document.querySelector('#users').innerHTML = listItemsHtml;
         })
     }

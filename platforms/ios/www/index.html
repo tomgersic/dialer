@@ -7,6 +7,12 @@
 
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 
+    <script type="text/javascript">
+    window.onerror = function(message, url, lineNumber) {
+        console.log("Error: "+message+" in "+url+" at line "+lineNumber);
+    }
+    </script>
+
 <script src="components/platform/platform.js"></script>
 
 <script src="cordova.js"></script>
@@ -20,6 +26,7 @@
   <link rel="import" href="components/core-toolbar/core-toolbar.html">
   <link rel="import" href="components/paper-tabs/paper-tabs.html">
   <link rel="import" href="post-list.html">
+  <link rel="import" href="forceclient-service/forceclient-service.html">
 
   <style>
   html,body {
@@ -63,6 +70,7 @@
 </head>
 
 <body unresolved>
+  <forceclient-service id="forceclient"></forceclient-service>
 
   <core-header-panel>
 
