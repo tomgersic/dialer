@@ -43,6 +43,10 @@
                         {
                             "xml": "<feature name=\"com.salesforce.smartstore\"><param name=\"ios-package\" value=\"SFSmartStorePlugin\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Console\"><param name=\"ios-package\" value=\"CDVLogger\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -139,6 +143,9 @@
     },
     "installed_plugins": {
         "com.salesforce": {
+            "PACKAGE_NAME": "com.salesforce.dialer"
+        },
+        "org.apache.cordova.console": {
             "PACKAGE_NAME": "com.salesforce.dialer"
         }
     },

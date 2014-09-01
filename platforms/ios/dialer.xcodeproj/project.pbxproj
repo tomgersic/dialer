@@ -63,6 +63,7 @@
 		FCDA4B8687C0425DA48415FB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC42F884B5D444E926DAA7F /* Security.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		26E3382DD60D4CC1A76DF269 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A0D0FA6C1CF4E519D1C377A /* SystemConfiguration.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		3578CA8626C540C4BA33AD5F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBCFD7C559EB4289805D3289 /* UIKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		1050B25577BB4696A5A6306F /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 222CA74CA54A48A1B32E74B7 /* CDVLogger.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -172,6 +173,8 @@
 		6EC42F884B5D444E926DAA7F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "Security.framework"; path = "System/Library/Frameworks/Security.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
 		5A0D0FA6C1CF4E519D1C377A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "SystemConfiguration.framework"; path = "System/Library/Frameworks/SystemConfiguration.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
 		EBCFD7C559EB4289805D3289 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "UIKit.framework"; path = "System/Library/Frameworks/UIKit.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
+		222CA74CA54A48A1B32E74B7 /* CDVLogger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVLogger.m"; path = "org.apache.cordova.console/CDVLogger.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		5F52F33F2D234B8D908CD1BE /* CDVLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVLogger.h"; path = "org.apache.cordova.console/CDVLogger.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -355,6 +358,8 @@
 				9ED5A0D0A1E24E8BA758A2BE /* SFUserAccountConstants.h */,
 				45795A5021E94767AE946116 /* SFUserAccountManager.h */,
 				3457AA2DFC24476A94917B2C /* AppDelegate+SalesforceHybridSDK.h */,
+				222CA74CA54A48A1B32E74B7 /* CDVLogger.m */,
+				5F52F33F2D234B8D908CD1BE /* CDVLogger.h */,
 			);
 			name = Plugins;
 			path = "dialer/Plugins";
@@ -556,6 +561,7 @@
 				6490A75C229249EEA6A7B7EE /* AppDelegate+notification.m in Sources */,
 				500C3195826B45508EDDAA6F /* PushPlugin.m in Sources */,
 				4685BB9EBA744A19B13410D9 /* AppDelegate+SalesforceHybridSDK.m in Sources */,
+				1050B25577BB4696A5A6306F /* CDVLogger.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
