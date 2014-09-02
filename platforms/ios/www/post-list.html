@@ -1,6 +1,6 @@
 <link rel="import" href="components/polymer/polymer.html">
 <link rel="import" href="post-service/post-service.html">
-<link rel="import" href="force-users/force-users.html">
+<link rel="import" href="force-contacts/force-contacts.html">
 <link rel="import" href="post-card.html">
 
 <polymer-element name="post-list" attributes="show">
@@ -16,16 +16,17 @@
     </style>
 
     <post-service id="service" posts="{{posts}}"></post-service>
-    <force-users id="forceusers" users="{{users}}"></force-users>
+    <force-contacts id="forcecontacts" contacts="{{contacts}}"></force-contacts>
 
     <div layout vertical center>
-      <template repeat="{{user in users}}">
+      <template repeat="{{contact in contacts}}">
         <post-card
-          favorite="false"
+          favorite=false
           on-favorite-tap="{{handleFavorite}}"
           hidden?="{{show == 'favorites' && !post.favorite}}">
-          <h2>{{user.Name}}</h2>
-          <p>{{user.Email}}</p>
+          <h2>{{contact.Name}}</h2>
+          <p>{{contact.Email}}</p>
+          <p>{{contact.Phone}}</p>
         </post-card>
       </template>
     </div>

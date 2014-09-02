@@ -1,5 +1,5 @@
 <link rel="import" href="../components/polymer/polymer.html">
-<polymer-element name="force-users" attributes="users">
+<polymer-element name="force-contacts" attributes="contacts">
   <template>
     <style>
     :host {
@@ -8,19 +8,19 @@
     </style>
   </template>
   <script>
-  Polymer('force-users', {
+  Polymer('force-contacts', {
     created: function() {
-      this.users = [];
+      this.contacts = [];
     },
     ready:function() {
       var forceclient = document.querySelector('forceclient-service');
       forceclient.authenticateUser(this,function(that,client){
-        var soql = 'SELECT Id, Name, Email FROM User LIMIT 10';
+        var soql = 'SELECT Id, Name, Email, Phone FROM Contact LIMIT 20';
         client.query(soql, function(response){
-          that.users = response.records;
+          that.contacts = response.records;
         }, function(error) {
           
-          console.log('Failed to fetch users: ');
+          console.log('Failed to fetch contacts: ');
           console.log(error);
         });
       })
