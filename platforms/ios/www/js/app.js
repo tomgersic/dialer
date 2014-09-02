@@ -6,62 +6,35 @@
     readyValue.polymerReady = false;
     readyValue.deviceReady = false;
 
-    /* Wait until cordova is ready to initiate the use of cordova plugins and app launch */
+    /* Wait until polymer is ready to initiate the use of cordova plugins and app launch */
     document.addEventListener("polymer-ready", function() {
-        //authenticateUser(showUsersList);
         if(initReady('polymer')) {
             var forceclient = document.querySelector('forceclient-service'); //.authenticateUser(showUsersList);
+
             forceclient.authenticateUser(showUsersList);
         }
     }, false);
 
+    /* Wait until cordova is ready to initiate the use of cordova plugins and app launch */
     document.addEventListener("deviceready", function() {
-        //authenticateUser(showUsersList);
         if(initReady('device')) {
             var forceclient = document.querySelector('forceclient-service'); //.authenticateUser(showUsersList);
             forceclient.authenticateUser(showUsersList);
         }
     }, false);
 
+    /* check that both polymer and cordova are ready */
     var initReady = function(isReady) {
         if(isReady == 'polymer') {
             readyValue.polymerReady = true;
         } else if(isReady == 'device') {
             readyValue.deviceReady = true;
         }
-
-        alert(readyValue);
-
         if(readyValue.polymerReady && readyValue.deviceReady) {
-            alert('true');
             return true;
         } else {
-            alert('false');
             return false;
         }
-    }
-
-    /* Method to authenticate user with Salesforce Mobile SDK's OAuth Plugin */
-    var authenticateUser = function(successHandler, errorHandler) {
-
-        // Get salesforce mobile sdk OAuth plugin
-        var oauthPlugin = cordova.require("com.salesforce.plugin.oauth");
-
-        // Call getAuthCredentials to get the initial session credentials
-        oauthPlugin.getAuthCredentials(
-            // Callback method when authentication succeeds.
-            function (creds) {
-                // Create forcetk client instance for rest API calls
-                var forceClient = new forcetk.Client();
-                forceClient.setSessionToken(creds.accessToken, "v31.0", creds.instanceUrl);
-
-                // Call success handler and handover the forcetkClient
-                successHandler(forceClient);
-            },
-            function (error) {
-                alert('Failed to authenticate user: ' + error);
-            }
-        );
     }
 
     /* This method will render a list of users from current salesforce org */
@@ -70,7 +43,7 @@
         fetchRecords(forceClient, function(data) {
             var users = data.records;
 
-            console.log(data.records);
+            //console.log(data.records);
 
             var listItemsHtml = '';
             for (var i=0; i < users.length; i++) {

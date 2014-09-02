@@ -1,5 +1,6 @@
 <link rel="import" href="components/polymer/polymer.html">
 <link rel="import" href="post-service/post-service.html">
+<link rel="import" href="force-users/force-users.html">
 <link rel="import" href="post-card.html">
 
 <polymer-element name="post-list" attributes="show">
@@ -15,15 +16,16 @@
     </style>
 
     <post-service id="service" posts="{{posts}}"></post-service>
-    
+    <force-users id="forceusers" users="{{users}}"></force-users>
+
     <div layout vertical center>
-      <template repeat="{{post in posts}}">
+      <template repeat="{{user in users}}">
         <post-card
-          favorite="{{post.favorite}}"
+          favorite="false"
           on-favorite-tap="{{handleFavorite}}"
           hidden?="{{show == 'favorites' && !post.favorite}}">
-          <h2>{{post.username}}</h2>
-          <p>{{post.text}}</p>
+          <h2>{{user.Name}}</h2>
+          <p>{{user.Email}}</p>
         </post-card>
       </template>
     </div>
