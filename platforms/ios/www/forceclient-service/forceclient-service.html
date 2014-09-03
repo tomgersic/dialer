@@ -16,6 +16,8 @@
       authenticateUser:function(context,successHandler, errorHandler) {
         //alert("Authenticate User Called");
 
+        alert(Force);
+
         // Get salesforce mobile sdk OAuth plugin
         var oauthPlugin = cordova.require("com.salesforce.plugin.oauth");
 
@@ -23,6 +25,9 @@
         oauthPlugin.getAuthCredentials(
             // Callback method when authentication succeeds.
             function (creds) {
+
+                //Force.init(creds, null, client, cordova.require("salesforce/plugin/oauth").forcetkRefresh);
+
                 // Create forcetk client instance for rest API calls
                 client.setSessionToken(creds.accessToken, "v31.0", creds.instanceUrl);
                 // Call success handler and handover the forcetkClient
