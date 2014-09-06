@@ -11,10 +11,60 @@
   Polymer('force-contacts', {
     created: function() {
       this.contacts = [];
+      this.cache = {};
+      this.models = {};
     },
     ready:function() {
       var forceclient = document.querySelector('forceclient-service');
       forceclient.authenticateUser(this,function(that,client){
+
+       //set up contacts cache
+        that.cache = new Force.StoreCache("contacts", [ {path:"Name", type:"string"} ]);
+
+        //set up contact model
+        that.models.Contact = Force.SObject.extend({
+          sobjectType: "Contact",
+          fieldlist: ["Id","Name","Email","Phone"],
+          cache: function() { return that.cache; },
+          cacheMode: function(method) {
+            if (!forceclient.offlineTracker.get("isOnline")) {
+              return Force.CACHE_MODE.CACHE_ONLY;
+            }
+            else {
+              return (method == "read" ? Force.CACHE_MODE.CACHE_FIRST : Force.CACHE_MODE.SERVER_FIRST);
+            }
+          }
+        });
+
+        
+        that.cache.init().then(function() {
+          
+          that.models.ContactCollection = Force.SObjectCollection.extend({
+            model: that.models.Contact,
+            fieldlist: ["Id","Name","Email","Phone"],
+            cache: function() { return that.cache; },
+            config: function() {
+              if(!forceclient.offlineTracker.get('isOnline')) {
+                return {
+                  type:"cache", 
+                  cacheQuery: {queryType:"exact", indexPath:"__local__", matchKey:true, order:"ascending", pageSize:250}
+                };
+              }
+              else {
+                return {
+                  type:"mru", 
+                  sobjectType:"Contact", fieldlist: this.fieldlist, orderBy:"LastModifiedDate", orderDirection:"DESC"
+                };
+              }
+            }  
+          });
+          
+        });
+
+
+
+
+
         var soql = 'SELECT Id, Name, Email, Phone FROM Contact LIMIT 20';
         client.query(soql, function(response){
           that.contacts = response.records;

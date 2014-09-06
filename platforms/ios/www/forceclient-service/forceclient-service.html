@@ -7,16 +7,34 @@
     var lastName = 'Smith';
     var client = new forcetk.Client();
 
+    var OfflineTracker = Backbone.Model.extend({
+        initialize: function() {
+            var that = this;
+            this.set("isOnline", navigator.onLine);
+            document.addEventListener("offline", function() {
+                console.log("Received OFFLINE event");
+                that.set("isOnline", false);
+            }, false);
+            document.addEventListener("online", function() {
+                console.log("Received ONLINE event");
+                // User decides when to go back online
+            }, false);
+        }
+    });
+
+    var offlineTracker;
+
     Polymer({
       ready: function() {
          this.firstName = firstName;
          this.lastName = lastName;
          this.client = client;
+         this.offlineTracker = offlineTracker;
       },
       authenticateUser:function(context,successHandler, errorHandler) {
         //alert("Authenticate User Called");
 
-        alert(Force);
+        offlineTracker= new OfflineTracker({isOnline: true});
 
         // Get salesforce mobile sdk OAuth plugin
         var oauthPlugin = cordova.require("com.salesforce.plugin.oauth");
@@ -26,7 +44,7 @@
             // Callback method when authentication succeeds.
             function (creds) {
 
-                //Force.init(creds, null, client, cordova.require("salesforce/plugin/oauth").forcetkRefresh);
+                Force.init(creds, null, client, cordova.require("com.salesforce.plugin.oauth").forcetkRefresh);
 
                 // Create forcetk client instance for rest API calls
                 client.setSessionToken(creds.accessToken, "v31.0", creds.instanceUrl);
