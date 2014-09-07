@@ -16,8 +16,6 @@
     },
     ready:function() {
       var forceclient = document.querySelector('forceclient-service');
-        
-      
 
       var that = this;
 
@@ -46,7 +44,7 @@
             console.log("*******I THINK I'M OFFLINE");
             return {
               type:"cache", 
-              cacheQuery: {queryType:"exact", indexPath:"__local__", matchKey:true, order:"ascending", pageSize:250}
+              cacheQuery: {queryType:"range", indexPath:"Id", order:"ascending", pageSize:250}
             };
           }
           else {
