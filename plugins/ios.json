@@ -47,6 +47,10 @@
                         {
                             "xml": "<feature name=\"Console\"><param name=\"ios-package\" value=\"CDVLogger\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -122,7 +126,7 @@
                     "SystemConfiguration.framework": [
                         {
                             "xml": "true",
-                            "count": 1
+                            "count": 2
                         }
                     ],
                     "UIKit.framework": [
@@ -146,6 +150,9 @@
             "PACKAGE_NAME": "com.salesforce.dialer"
         },
         "org.apache.cordova.console": {
+            "PACKAGE_NAME": "com.salesforce.dialer"
+        },
+        "org.apache.cordova.network-information": {
             "PACKAGE_NAME": "com.salesforce.dialer"
         }
     },
