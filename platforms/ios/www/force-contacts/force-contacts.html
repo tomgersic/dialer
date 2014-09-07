@@ -16,64 +16,72 @@
     },
     ready:function() {
       var forceclient = document.querySelector('forceclient-service');
+        
+      this.setupCache(this);
+
+      //set up contact model
+      this.models.Contact = Force.SObject.extend({
+        sobjectType: "Contact",
+        fieldlist: ["Id","Name","Email","Phone"],
+      });
+
+      //set up contact collection
+      this.models.ContactCollection = Force.SObjectCollection.extend({
+        model: this.models.Contact,
+        fieldlist: ["Id","Name","Email","Phone"],
+        config: function() {
+          if(!forceclient.offlineTracker.get('isOnline')) {
+            return {
+              type:"cache", 
+              cacheQuery: {queryType:"exact", indexPath:"__local__", matchKey:true, order:"ascending", pageSize:250}
+            };
+          }
+          else {
+            return {
+              type:"mru", sobjectType:"Contact", fieldlist: this.fieldlist, orderBy:"LastModifiedDate", orderDirection:"DESC"
+            };
+          }
+        }  
+      });
+
+
+
+      //authenticate
       forceclient.authenticateUser(this,function(that,client){
 
-       //set up contacts cache
-        that.cache = new Force.StoreCache("contacts", [ {path:"Name", type:"string"} ]);
+        
 
-        //set up contact model
-        that.models.Contact = Force.SObject.extend({
-          sobjectType: "Contact",
-          fieldlist: ["Id","Name","Email","Phone"],
-          cache: function() { return that.cache; },
-          cacheMode: function(method) {
-            if (!forceclient.offlineTracker.get("isOnline")) {
-              return Force.CACHE_MODE.CACHE_ONLY;
-            }
-            else {
-              return (method == "read" ? Force.CACHE_MODE.CACHE_FIRST : Force.CACHE_MODE.SERVER_FIRST);
-            }
+        //instantiate and fetch Contacts
+        var mycontacts = new that.models.ContactCollection();
+
+        mycontacts.fetch({           
+          success: function(data) {
+            that.contacts = data.toJSON();
+          },
+          error: function() {
+            alert("Failed to get Contacts");
           }
         });
 
-        
-        that.cache.init().then(function() {
-          
-          that.models.ContactCollection = Force.SObjectCollection.extend({
-            model: that.models.Contact,
-            fieldlist: ["Id","Name","Email","Phone"],
-            cache: function() { return that.cache; },
-            config: function() {
-              if(!forceclient.offlineTracker.get('isOnline')) {
-                return {
-                  type:"cache", 
-                  cacheQuery: {queryType:"exact", indexPath:"__local__", matchKey:true, order:"ascending", pageSize:250}
-                };
-              }
-              else {
-                return {
-                  type:"mru", 
-                  sobjectType:"Contact", fieldlist: this.fieldlist, orderBy:"LastModifiedDate", orderDirection:"DESC"
-                };
-              }
-            }  
-          });
-          
-        });
 
-
-
-
-
+        //direct forcetk query
+        /*
         var soql = 'SELECT Id, Name, Email, Phone FROM Contact LIMIT 20';
         client.query(soql, function(response){
+          console.log(response.records);
           that.contacts = response.records;
         }, function(error) {
           
           console.log('Failed to fetch contacts: ');
           console.log(error);
-        });
+        });*/
+        
       })
+    },
+    setupCache: function(that) {
+      //set up contacts cache
+      that.cache = new Force.StoreCache("contacts", [ {path:"Name", type:"string"} ]);
+      return $.when(that.cache.init());
     }
   });
   </script>

@@ -29,12 +29,12 @@
          this.firstName = firstName;
          this.lastName = lastName;
          this.client = client;
-         this.offlineTracker = offlineTracker;
+         this.offlineTracker = new OfflineTracker({isOnline: true});
       },
-      authenticateUser:function(context,successHandler, errorHandler) {
+      authenticateUser:function(context,successHandler,errorHandler) {
         //alert("Authenticate User Called");
 
-        offlineTracker= new OfflineTracker({isOnline: true});
+       
 
         // Get salesforce mobile sdk OAuth plugin
         var oauthPlugin = cordova.require("com.salesforce.plugin.oauth");
