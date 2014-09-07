@@ -7,6 +7,7 @@
     var lastName = 'Smith';
     var client = new forcetk.Client();
 
+
     var OfflineTracker = Backbone.Model.extend({
         initialize: function() {
             var that = this;
@@ -45,7 +46,8 @@
             function (creds) {
 
                 Force.init(creds, null, client, cordova.require("com.salesforce.plugin.oauth").forcetkRefresh);
-
+                              
+                
                 // Create forcetk client instance for rest API calls
                 client.setSessionToken(creds.accessToken, "v31.0", creds.instanceUrl);
                 // Call success handler and handover the forcetkClient

@@ -17,13 +17,15 @@
     ready:function() {
       var forceclient = document.querySelector('forceclient-service');
         
-      this.setupCache(this);
+      
+
+      var that = this;
 
       //set up contact model
       this.models.Contact = Force.SObject.extend({
         sobjectType: "Contact",
         fieldlist: ["Id","Name","Email","Phone"],
-        cache: function() { return this.cache; },
+        cache: function() { return that.cache; },
         cacheMode: function(method) {
           if (!forceclient.offlineTracker.get("isOnline")) {
             return Force.CACHE_MODE.CACHE_ONLY;
@@ -38,14 +40,18 @@
       this.models.ContactCollection = Force.SObjectCollection.extend({
         model: this.models.Contact,
         fieldlist: ["Id","Name","Email","Phone"],
+        cache: function() { return that.cache; },
         config: function() {
           if(!forceclient.offlineTracker.get('isOnline')) {
+            console.log("*******I THINK I'M OFFLINE");
             return {
               type:"cache", 
               cacheQuery: {queryType:"exact", indexPath:"__local__", matchKey:true, order:"ascending", pageSize:250}
             };
           }
           else {
+            console.log("*******I THINK I'M ONLINE");
+
             return {
               type:"mru", sobjectType:"Contact", fieldlist: this.fieldlist, orderBy:"LastModifiedDate", orderDirection:"DESC"
             };
@@ -58,7 +64,7 @@
       //authenticate
       forceclient.authenticateUser(this,function(that,client){
 
-        
+        that.setupCache(that);
 
         //instantiate and fetch Contacts
         var mycontacts = new that.models.ContactCollection();
@@ -67,8 +73,9 @@
           success: function(data) {
             that.contacts = data.toJSON();
           },
-          error: function() {
+          error: function(error) {
             alert("Failed to get Contacts");
+            console.log(error);
           }
         });
 
