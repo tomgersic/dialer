@@ -23,6 +23,15 @@
       this.models.Contact = Force.SObject.extend({
         sobjectType: "Contact",
         fieldlist: ["Id","Name","Email","Phone"],
+        cache: function() { return this.cache; },
+        cacheMode: function(method) {
+          if (!forceclient.offlineTracker.get("isOnline")) {
+            return Force.CACHE_MODE.CACHE_ONLY;
+          }
+          else {
+            return (method == "read" ? Force.CACHE_MODE.CACHE_FIRST : Force.CACHE_MODE.SERVER_FIRST);
+          }
+        }
       });
 
       //set up contact collection
