@@ -9,5 +9,5 @@
   "startPage": "index.html",
   "errorPage": "error.html",
   "shouldAuthenticate": true,
-  "attemptOfflineLoad": false
+  "attemptOfflineLoad": true
 }
