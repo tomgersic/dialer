@@ -11,7 +11,11 @@
     var OfflineTracker = Backbone.Model.extend({
         initialize: function() {
             var that = this;
+            
+            console.log(navigator.connection.type);
+
             this.set("isOnline", navigator.onLine);
+            //this.set("isOnline", false);
             document.addEventListener("offline", function() {
                 console.log("Received OFFLINE event");
                 that.set("isOnline", false);
@@ -33,9 +37,7 @@
          this.offlineTracker = new OfflineTracker({isOnline: true});
       },
       authenticateUser:function(context,successHandler,errorHandler) {
-        //alert("Authenticate User Called");
-
-       
+        console.log("Authenticate User Called");
 
         // Get salesforce mobile sdk OAuth plugin
         var oauthPlugin = cordova.require("com.salesforce.plugin.oauth");
