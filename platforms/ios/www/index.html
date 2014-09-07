@@ -78,10 +78,7 @@
 
     <core-toolbar>
 
-      <paper-tabs id="tabs" selected="all" self-end>
-        <paper-tab name="all">All</paper-tab>
-        <paper-tab name="favorites">Favorites</paper-tab>
-      </paper-tabs>
+      <core-icon-button icon="menu"></core-icon-button>
 
     </core-toolbar>
 
@@ -93,11 +90,11 @@
 
   <script>
 
-  var tabs = document.querySelector('paper-tabs');
+  var button = document.querySelector('core-icon-button');
   var list = document.querySelector('post-list');
 
-  tabs.addEventListener('core-select', function() {
-    list.show = tabs.selected;
+  button.addEventListener('click', function() {
+    cordova.require("com.salesforce.plugin.smartstore").showInspector();
   });
   </script>
 </body>
