@@ -1,5 +1,4 @@
 <link rel="import" href="components/polymer/polymer.html">
-<link rel="import" href="post-service/post-service.html">
 <link rel="import" href="force-contacts/force-contacts.html">
 <link rel="import" href="post-card.html">
 
@@ -15,7 +14,6 @@
     }
     </style>
 
-    <post-service id="service" posts="{{posts}}"></post-service>
     <force-contacts id="forcecontacts" contacts="{{contacts}}"></force-contacts>
 
     <div layout vertical center>
@@ -23,10 +21,10 @@
         <post-card
           favorite=false
           on-favorite-tap="{{handleFavorite}}"
-          hidden?="{{show == 'favorites' && !post.favorite}}">
-          <h2>{{contact.Name}}</h2>
-          <p>{{contact.Email}}</p>
-          <p>{{contact.Phone}}</p>
+          hidden?="{{show == 'favorites'}}"
+          phoneNumber="{{contact.Phone}}"
+          emailAddress="{{contact.Email}}"
+          contactName="{{contact.Name}}">
         </post-card>
       </template>
     </div>

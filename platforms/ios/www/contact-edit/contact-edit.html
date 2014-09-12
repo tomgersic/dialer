@@ -1,0 +1,60 @@
+<link rel="import" href="../components/polymer/polymer.html">
+<link rel="import" href="../components/paper-button/paper-button.html">
+<link rel="import" href="../components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../components/paper-dialog/paper-dialog-transition.html">
+<link rel="import" href="../components/paper-input/paper-input.html">
+
+<polymer-element name="contact-edit">
+  <template>
+    <style>
+    paper-dialog {
+      width: 50%;
+      min-width: 430px;
+    }
+
+    p {
+      margin-bottom: 0;
+    }
+
+    paper-dialog paper-button {
+      font-weight: bold;
+    }
+
+    paper-button[autofocus] {
+      color: #4285f4;
+    }
+
+    </style>
+
+    <paper-dialog id="editDialog" transition="paper-dialog-transition-center" heading="Edit Phone Number">
+      <p>Lorem ipsum ....</p>
+      <paper-input label="Phone Number" id="inputphone"></paper-input>
+
+      <paper-button label="More Info..." dismissive></paper-button>
+      <paper-button label="Decline" affirmative></paper-button>
+      <paper-button label="Accept" affirmative autofocus></paper-button>
+    </paper-dialog> 
+  </template>
+  <script>
+  Polymer({
+    publish: {
+      favorite: {
+        value: false,
+        reflect: true
+      }
+    },
+    toggleDialog: function(phoneNumber) {
+      this.$.inputphone.value=phoneNumber;
+      //alert(this.$.editDialog);
+      this.$.editDialog.toggle();
+      //var dialog = document.querySelector('paper-dialog[transition=paper-dialog-transition-center]');
+      //alert(dialog);
+      //dialog.toggle();
+
+    },
+    favoriteTapped: function(event, detail, sender) {
+    
+    }
+  });
+  </script>
+</polymer-element>
