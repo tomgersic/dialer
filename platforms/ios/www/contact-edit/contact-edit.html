@@ -20,18 +20,24 @@
       font-weight: bold;
     }
 
+    paper-button {
+      float:left;
+    }
+
+
     paper-button[autofocus] {
       color: #4285f4;
+      float:right;
     }
 
     </style>
 
-    <paper-dialog id="editDialog" transition="paper-dialog-transition-center" heading="Edit Phone Number">
+    <paper-dialog id="editDialog" backdrop="true" transition="paper-dialog-transition-center" heading="Edit Phone Number">
       <p>{{contactname}}</p>
       <paper-input label="Phone Number" id="inputphone" value="{{phoneNumber}}"></paper-input>
 
-      <paper-button label="Cancel" dismissive></paper-button>
-      <paper-button label="Accept" affirmative autofocus></paper-button>
+      <paper-button label="Cancel" on-click="{{cancelClick}}"></paper-button>
+      <paper-button label="Accept" autofocus on-click="{{acceptClick}}"></paper-button>
     </paper-dialog> 
   </template>
   <script>
@@ -48,8 +54,12 @@
       //this.$.inputphone.value=phoneNumber;
       this.$.editDialog.toggle();
     },
-    favoriteTapped: function(event, detail, sender) {
-    
+    acceptClick: function(event, detail, sender) {
+      
+      this.$.editDialog.toggle();
+    },
+    cancelClick: function(event,detail,sender) {
+      this.$.editDialog.toggle();
     }
   });
   </script>
