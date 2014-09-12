@@ -76,20 +76,6 @@
             console.log(error);
           }
         });
-
-
-        //direct forcetk query
-        /*
-        var soql = 'SELECT Id, Name, Email, Phone FROM Contact LIMIT 20';
-        client.query(soql, function(response){
-          console.log(response.records);
-          that.contacts = response.records;
-        }, function(error) {
-          
-          console.log('Failed to fetch contacts: ');
-          console.log(error);
-        });*/
-        
       })
     },
     setupCache: function(that) {

@@ -3,8 +3,6 @@
 <polymer-element name="forceclient-service">
   <script>
   (function() {
-    var firstName = 'John';
-    var lastName = 'Smith';
     var client = new forcetk.Client();
 
 
@@ -31,11 +29,11 @@
 
     Polymer({
       ready: function() {
-         this.firstName = firstName;
-         this.lastName = lastName;
          this.client = client;
          this.offlineTracker = new OfflineTracker({isOnline: true});
       },
+
+      //Authenticate the User
       authenticateUser:function(context,successHandler,errorHandler) {
         console.log("Authenticate User Called");
 
@@ -47,14 +45,14 @@
             // Callback method when authentication succeeds.
             function (creds) {
 
+                //initialize SmartSync with the returned creds and (optionally) pass in the forcetk client that we've already initialized
                 Force.init(creds, null, client, cordova.require("com.salesforce.plugin.oauth").forcetkRefresh);
                               
-                
                 // Create forcetk client instance for rest API calls
                 client.setSessionToken(creds.accessToken, "v31.0", creds.instanceUrl);
+
                 // Call success handler and handover the forcetkClient
                 successHandler(context,client);
-
             },
             function (error) {
                 alert('Failed to authenticate user: ' + error);
