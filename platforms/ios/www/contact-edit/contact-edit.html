@@ -27,11 +27,10 @@
     </style>
 
     <paper-dialog id="editDialog" transition="paper-dialog-transition-center" heading="Edit Phone Number">
-      <p>Lorem ipsum ....</p>
-      <paper-input label="Phone Number" id="inputphone"></paper-input>
+      <p>{{contactname}}</p>
+      <paper-input label="Phone Number" id="inputphone" value="{{phoneNumber}}"></paper-input>
 
-      <paper-button label="More Info..." dismissive></paper-button>
-      <paper-button label="Decline" affirmative></paper-button>
+      <paper-button label="Cancel" dismissive></paper-button>
       <paper-button label="Accept" affirmative autofocus></paper-button>
     </paper-dialog> 
   </template>
@@ -43,14 +42,11 @@
         reflect: true
       }
     },
-    toggleDialog: function(phoneNumber) {
-      this.$.inputphone.value=phoneNumber;
-      //alert(this.$.editDialog);
+    toggleDialog: function(contactName,phoneNumber) {
+      this.contactname=contactName;
+      this.phoneNumber=phoneNumber;
+      //this.$.inputphone.value=phoneNumber;
       this.$.editDialog.toggle();
-      //var dialog = document.querySelector('paper-dialog[transition=paper-dialog-transition-center]');
-      //alert(dialog);
-      //dialog.toggle();
-
     },
     favoriteTapped: function(event, detail, sender) {
     
