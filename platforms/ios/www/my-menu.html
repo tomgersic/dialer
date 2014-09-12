@@ -1,0 +1,128 @@
+<link rel="import" href="components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="components/paper-item/paper-item.html">
+
+<polymer-element name="my-menu">
+    <template>
+        <style>
+            paper-menu-button {
+                color:gray;
+                valign:bottom;
+                width:100px;
+            }
+        </style>
+        <paper-menu-button icon="menu">
+            <paper-item on-tap="{{launchInspector}}">Launch Inspector</paper-item>
+            <paper-item on-tap="{{example_registerSoup}}">Demo Register</paper-item>
+            <paper-item on-tap="{{example_createRecord}}">Demo Create Record</paper-item>
+            <paper-item on-tap="{{example_queryAll}}">Demo All Query</paper-item>
+            <paper-item on-tap="{{example_queryExact}}">Demo Exact Query</paper-item>
+            <paper-item on-tap="{{example_queryLike}}">Demo Like Query</paper-item>
+            <paper-item on-tap="{{example_querySmart}}">Demo SmartSQL Query</paper-item>
+            <paper-item on-tap="{{example_queryContact}}">Demo Query Contacts</paper-item>
+        </paper-menu-button>
+    </template>
+
+    <script>
+        Polymer('my-menu', {
+            //Show the SmartStore Inspector
+            launchInspector: function () { 
+                cordova.require("com.salesforce.plugin.smartstore").showInspector();
+            },    
+
+            //REGISTER A DUMMY SOUP FOR DEMO PURPOSES
+            example_registerSoup: function() {
+                var indexSpec = [
+                    {"path":"Id","type":"string"},
+                    {"path":"Name","type":"string"}
+                ];
+
+                navigator.smartstore.registerSoup('DEMO',indexSpec,function(param){
+                    console.log('Soup Created: '+param);
+                },this.error);
+
+            },
+
+            //CREATE SOME DUMMY RECORDS
+            // verify with something like: SELECT {DEMO:Name} FROM {DEMO}
+            example_createRecord: function() {
+                var dummyRecords = [{
+                    "Name": "My Dummy Record",
+                    "Id": "123456789012345678",
+                    "Something": "Nothing"
+                },{
+                    "Name": "Another Record",
+                    "Id": "876543210987654321",
+                    "Something": "Something Else"
+                }];
+
+                navigator.smartstore.upsertSoupEntriesWithExternalId('DEMO',dummyRecords, 'Id', function(){
+                    console.log("Upsert Success");        
+                }, this.error);   
+            },
+
+            //QUERY ALL
+            example_queryAll: function(){
+                var querySpec = navigator.smartstore.buildAllQuerySpec("Id", null, 2000);
+                
+                navigator.smartstore.querySoup('DEMO',querySpec, function(cursor) { 
+                    console.log(cursor.currentPageOrderedEntries);
+                    //close the query cursor
+                    navigator.smartstore.closeCursor(cursor);
+                    //callback(records);
+                },this.error);        
+            },
+
+            //QUERY EXACT
+            example_queryExact: function(){
+                var querySpec = navigator.smartstore.buildExactQuerySpec("Id", "876543210987654321", 2000);
+                
+                navigator.smartstore.querySoup('DEMO',querySpec, function(cursor) { 
+                    console.log(cursor.currentPageOrderedEntries);
+                    //close the query cursor
+                    navigator.smartstore.closeCursor(cursor);
+                    //callback(records);
+                },this.error);        
+            },
+
+            //QUERY LIKE
+            example_queryLike: function(){
+                var querySpec = navigator.smartstore.buildLikeQuerySpec("Name", "%Dummy%", null, 2000);
+                
+                navigator.smartstore.querySoup('DEMO',querySpec, function(cursor) { 
+                    console.log(cursor.currentPageOrderedEntries);
+                    //close the query cursor
+                    navigator.smartstore.closeCursor(cursor);
+                    //callback(records);
+                },this.error);        
+            },
+            
+            //QUERY SMART
+            example_querySmart: function(){
+                var smartSQL = "SELECT {DEMO:Name} FROM {DEMO} WHERE {DEMO:Id} = '876543210987654321'";
+                var querySpec = navigator.smartstore.buildSmartQuerySpec(smartSQL, 2000);
+                
+                navigator.smartstore.runSmartQuery(querySpec, function(cursor) {
+                    console.log(cursor.currentPageOrderedEntries);
+                    //close the query cursor
+                    navigator.smartstore.closeCursor(cursor);            
+                }, this.error);
+            },
+
+            //QUERY A REAL OPPTY
+            example_queryContact: function(){
+                var querySpec = navigator.smartstore.buildAllQuerySpec("Id", null, 2000);
+                
+                navigator.smartstore.querySoup('contacts',querySpec, function(cursor) { 
+                    console.log(cursor.currentPageOrderedEntries);
+                    //close the query cursor
+                    navigator.smartstore.closeCursor(cursor);
+                    //callback(records);
+                },this.error); 
+            },
+
+            error: function(err){
+                console.log(err);
+            }
+        });
+    </script>
+</polymer-element>

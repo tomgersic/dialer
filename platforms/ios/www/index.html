@@ -30,6 +30,7 @@
   <link rel="import" href="post-list.html">
   <link rel="import" href="forceclient-service/forceclient-service.html">
   <link rel="import" href="contact-edit/contact-edit.html">
+  <link rel="import" href="my-menu.html">
 
   <style>
   html,body {
@@ -79,7 +80,7 @@
   
     <core-toolbar>
 
-      <core-icon-button icon="menu"></core-icon-button>
+      <my-menu></my-menu>
 
     </core-toolbar>
 
@@ -91,12 +92,9 @@
 <contact-edit id="contactedit"></contact-edit>
   <script>
 
-  var button = document.querySelector('core-icon-button');
   var list = document.querySelector('post-list');
 
-  button.addEventListener('click', function() {
-    cordova.require("com.salesforce.plugin.smartstore").showInspector();
-  });
+
   </script>
 </body>
 
