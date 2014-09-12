@@ -71,40 +71,6 @@
       contactEdit = document.querySelector('contact-edit');
 
       contactEdit.toggleDialog(this.contactName,this.phoneNumber);
-
-      //alert(contactEdit);
-      
-      //cordova.require("com.salesforce.plugin.smartstore").showInspector();
-   /*   
-      navigator.smartstore.soupExists('contacts',function(param){
-            alert('yes');
-            //alert(param);
-            console.log(param);
-        },function(error){
-            alert('no');
-            console.log(error);
-            alert(error);
-      });
-
-      //QUERY ALL
-      var querySpec = navigator.smartstore.buildAllQuerySpec("Id", null, 2000);
-        
-      navigator.smartstore.querySoup('contacts',querySpec, function(cursor) { 
-          //alert(cursor);
-          console.log("SUCCESS");
-          console.log(cursor);
-            console.log(cursor.currentPageOrderedEntries);
-            //close the query cursor
-            navigator.smartstore.closeCursor(cursor);
-            //callback(records);
-      },function(error){
-        console.log("ERROR");
-        console.log(error);
-      });        
-    */
-
-      //this.favorite = !this.favorite;
-      //this.fire('favorite-tap');
     }
   });
   </script>

@@ -19,7 +19,7 @@
 
       var that = this;
 
-      //set up contact model
+      //set up contact model (Force.SObject)
       this.models.Contact = Force.SObject.extend({
         sobjectType: "Contact",
         fieldlist: ["Id","Name","Email","Phone"],
@@ -34,7 +34,7 @@
         }
       });
 
-      //set up contact collection
+      //set up contact collection (Force.SObjectCollection)
       this.models.ContactCollection = Force.SObjectCollection.extend({
         model: this.models.Contact,
         fieldlist: ["Id","Name","Email","Phone"],
@@ -59,7 +59,7 @@
 
 
 
-      //authenticate
+      //authenticate and setup caches
       forceclient.authenticateUser(this,function(that,client){
 
         that.setupCache(that);
@@ -67,6 +67,7 @@
         //instantiate and fetch Contacts
         var mycontacts = new that.models.ContactCollection();
 
+        //FETCH fetches the records from Salesforce or from Smartstore and then Caches them in Smartstore if necessary
         mycontacts.fetch({           
           success: function(data) {
             that.contacts = data.toJSON();
@@ -78,6 +79,8 @@
         });
       })
     },
+
+    //Setup Cache
     setupCache: function(that) {
       //set up contacts cache
       that.cache = new Force.StoreCache("contacts", [ {path:"Name", type:"string"} ]);
