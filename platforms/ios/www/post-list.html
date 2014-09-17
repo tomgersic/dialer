@@ -19,22 +19,24 @@
     <div layout vertical center>
       <template repeat="{{contact in contacts}}">
         <post-card
-          favorite=false
-          on-favorite-tap="{{handleFavorite}}"
-          hidden?="{{show == 'favorites'}}"
           phoneNumber="{{contact.Phone}}"
           emailAddress="{{contact.Email}}"
-          contactName="{{contact.Name}}">
+          contactName="{{contact.Name}}"
+          contactId="{{contact.Id}}">
         </post-card>
       </template>
     </div>
+    <contact-edit on-contact-edited="{{handleContactEdited}}"></contact-edit>
   </template>
 
   <script>
   Polymer({
-    handleFavorite: function(event, detail, sender) {
-      var post = sender.templateInstance.model.post;
-      this.$.service.setFavorite(post.uid, post.favorite);
+    created: function() {
+      var contactEdit = document.querySelector('contact-edit');
+      contactEdit.addEventListener('contact-edited', function(e,detail,sender) {
+        //TODO
+        console.log(e.detail);
+      });
     }
   });
   </script>

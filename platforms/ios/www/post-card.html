@@ -2,7 +2,7 @@
 <link rel="import" href="components/core-icon-button/core-icon-button.html">
 <link rel="import" href="contact-edit/contact-edit.html">
 
-<polymer-element name="post-card" attributes="phoneNumber contactName emailAddress">
+<polymer-element name="post-card" attributes="phoneNumber contactName emailAddress contactId">
   <template>
     <style>
     :host {
@@ -47,30 +47,22 @@
     <core-icon-button
       id="favicon"
       icon="settings-phone"
-      on-tap="{{favoriteTapped}}">
+      on-tap="{{editTapped}}">
     </core-icon-button>
 
     <p>{{emailAddress}}</p>
     <p>{{phoneNumber}}</p> 
   </template>
   <script>
-  Polymer({
-    publish: {
-      favorite: {
-        value: false,
-        reflect: true
-      }
-    },    
+  Polymer({  
     created: function() {
       this.phoneNumber = '';
     },
-    favoriteTapped: function(event, detail, sender) {
-      //var contactEdit = new ContactEdit();
-      //alert(this.phoneNumber);
+    editTapped: function(event, detail, sender) {
 
       contactEdit = document.querySelector('contact-edit');
 
-      contactEdit.toggleDialog(this.contactName,this.phoneNumber);
+      contactEdit.toggleDialog(this.contactName,this.phoneNumber,this.contactId);
     }
   });
   </script>

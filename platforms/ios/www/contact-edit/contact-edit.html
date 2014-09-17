@@ -42,20 +42,17 @@
   </template>
   <script>
   Polymer({
-    publish: {
-      favorite: {
-        value: false,
-        reflect: true
-      }
-    },
-    toggleDialog: function(contactName,phoneNumber) {
+    toggleDialog: function(contactName,phoneNumber,contactId) {
       this.contactname=contactName;
       this.phoneNumber=phoneNumber;
+      this.contactId=contactId;
       //this.$.inputphone.value=phoneNumber;
       this.$.editDialog.toggle();
     },
     acceptClick: function(event, detail, sender) {
       //TODO: Save...
+      this.fire('contact-edited',{contactId:this.contactId,phoneNumber:this.phoneNumber});
+
       this.$.editDialog.toggle();
     },
     cancelClick: function(event,detail,sender) {
