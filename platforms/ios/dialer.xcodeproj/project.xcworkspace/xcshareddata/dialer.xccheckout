@@ -10,29 +10,29 @@
 	<string>dialer</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>9D1866DB-35C3-44C1-9BCE-21462CEB69E3</key>
+		<key>C58E0E48A10C1D7063CB15DD9B3D7DE2DCBE6B86</key>
 		<string>https://bitbucket.org/tomgersic/dialer</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>platforms/ios/dialer.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>9D1866DB-35C3-44C1-9BCE-21462CEB69E3</key>
+		<key>C58E0E48A10C1D7063CB15DD9B3D7DE2DCBE6B86</key>
 		<string>../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://bitbucket.org/tomgersic/dialer</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>9D1866DB-35C3-44C1-9BCE-21462CEB69E3</string>
+	<string>C58E0E48A10C1D7063CB15DD9B3D7DE2DCBE6B86</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>9D1866DB-35C3-44C1-9BCE-21462CEB69E3</string>
+			<string>C58E0E48A10C1D7063CB15DD9B3D7DE2DCBE6B86</string>
 			<key>IDESourceControlWCCName</key>
 			<string>dialer</string>
 		</dict>
