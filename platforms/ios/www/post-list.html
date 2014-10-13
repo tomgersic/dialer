@@ -33,9 +33,19 @@
   Polymer({
     created: function() {
       var contactEdit = document.querySelector('contact-edit');
+      var that = this;
       contactEdit.addEventListener('contact-edited', function(e,detail,sender) {
-        //TODO
         console.log(e.detail);
+        
+        //update the phone number
+        that.$.forcecontacts.updateContactPhone(e.detail.contactId,e.detail.phoneNumber);
+
+        //reload contact data
+        that.$.forcecontacts.fetchContacts();
+
+        //refresh template
+        var template = document.querySelector('template'); // Use specific selector here
+        template.iterator_.updateIteratedValue(); // Force Polymer to refresh template
       });
     }
   });

@@ -13,6 +13,7 @@
       this.contacts = [];
       this.cache = {};
       this.models = {};
+      this.contactcollection = [];
     },
     ready:function() {
       var forceclient = document.querySelector('forceclient-service');
@@ -20,9 +21,14 @@
       var that = this;
 
       //set up contact model (Force.SObject)
+      //when writing, don't include Name since it isn't an updateable field in SFDC (FirstName and LastName are updateable)
       this.models.Contact = Force.SObject.extend({
         sobjectType: "Contact",
-        fieldlist: ["Id","Name","Email","Phone"],
+        fieldlist: function(method) { 
+          return method == "read" 
+            ? ["Id","Name","Email","Phone"]
+            : ["Id", "Phone"];
+        },
         cache: function() { return that.cache; },
         cacheMode: function(method) {
           if (!forceclient.offlineTracker.get("isOnline")) {
@@ -63,10 +69,15 @@
         that.setupCache(that);
 
         //instantiate and fetch Contacts
-        var mycontacts = new that.models.ContactCollection();
+        that.contactcollection = new that.models.ContactCollection();
 
         //FETCH fetches the records from Salesforce or from Smartstore and then Caches them in Smartstore if necessary
-        mycontacts.fetch({           
+        that.fetchContacts();
+      })
+    },
+    fetchContacts: function() {
+      var that = this;
+        that.contactcollection.fetch({           
           success: function(data) {
             that.contacts = data.toJSON();
           },
@@ -75,9 +86,32 @@
             console.log(error);
           }
         });
-      })
     },
-
+    updateContactPhone: function(Id,phoneNumber){
+      var that = this;
+      this.contactcollection.each(function( model ) {
+        if(model.get("Id") == Id){
+          console.log(model);
+          model.set("Phone",phoneNumber);
+          model.save(null, that.getSaveOptions(Force.MERGE_MODE.OVERWRITE));
+          console.log(model);
+        }
+      });
+    },
+    getSaveOptions: function(mergeMode, cacheMode) {
+        var that = this;
+        return {
+            cacheMode: cacheMode,
+            mergeMode: mergeMode,
+            success: function() { 
+              console.log("WRITE SUCCESS");
+            },
+            error: function(data, err, options) { 
+                console.log(err);
+                alert(err.responseText);
+            }
+        };
+    },
     //Setup Cache
     setupCache: function(that) {
       //set up contacts cache
